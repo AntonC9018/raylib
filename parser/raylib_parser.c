@@ -1556,15 +1556,18 @@ static void ExportParsedData(const char *fileName, int format)
                 fprintf(outFile, "      \"type\": \"%s\",\n", StrDefineType(defines[i].type));
                 if (defines[i].isHex) // INT or LONG
                 {
-                    fprintf(outFile, "      \"value\": %ld,\n", strtol(defines[i].value, NULL, 16));
+                    fprintf(outFile, "      \"value\": \"%ld\",\n", strtol(defines[i].value, NULL, 16));
+                }
+                else if (defines[i].type == STRING)
+                {
+                    fprintf(outFile, "      \"value\": %s,\n", defines[i].value);
                 }
                 else if ((defines[i].type == INT) ||
                          (defines[i].type == LONG) ||
                          (defines[i].type == FLOAT) ||
-                         (defines[i].type == DOUBLE) ||
-                         (defines[i].type == STRING))
+                         (defines[i].type == DOUBLE))
                 {
-                    fprintf(outFile, "      \"value\": %s,\n", defines[i].value);
+                    fprintf(outFile, "      \"value\": \"%s\",\n", defines[i].value);
                 }
                 else
                 {

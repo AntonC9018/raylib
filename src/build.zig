@@ -116,8 +116,8 @@ pub fn addRaylib(b: *std.Build, target: anytype, optimize: std.builtin.OptimizeM
                 raylib.linkSystemLibrary("dl");
                 raylib.linkSystemLibrary("m");
                 raylib.linkSystemLibrary("X11");
-                raylib.addLibraryPath(.{ .path = "/usr/lib" });
-                raylib.addIncludePath(.{ .path = "/usr/include" });
+                raylib.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
+                raylib.addIncludePath(.{ .cwd_relative = "/usr/include" });
 
                 raylib.defineCMacro("PLATFORM_DESKTOP", null);
             } else {
@@ -129,7 +129,7 @@ pub fn addRaylib(b: *std.Build, target: anytype, optimize: std.builtin.OptimizeM
                 raylib.linkSystemLibrary("rt");
                 raylib.linkSystemLibrary("m");
                 raylib.linkSystemLibrary("dl");
-                raylib.addIncludePath(.{ .path = "/usr/include/libdrm" });
+                raylib.addIncludePath(.{ .cwd_relative = "/usr/include/libdrm" });
 
                 raylib.defineCMacro("PLATFORM_DRM", null);
                 raylib.defineCMacro("GRAPHICS_API_OPENGL_ES2", null);
@@ -182,7 +182,7 @@ pub fn addRaylib(b: *std.Build, target: anytype, optimize: std.builtin.OptimizeM
             var dir = std.fs.openDirAbsolute(cache_include, std.fs.Dir.OpenDirOptions{ .access_sub_paths = true, .no_follow = true }) catch @panic("No emscripten cache. Generate it!");
             dir.close();
 
-            raylib.addIncludePath(.{ .path = cache_include });
+            raylib.addIncludePath(.{ .cwd_relative = cache_include });
         },
         else => {
             @panic("Unsupported OS");
